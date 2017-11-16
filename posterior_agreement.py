@@ -6,12 +6,12 @@ class NDimPosterior:
     def __init__(self, samples):
         """Initialize the Gaussian KDE for an n-dimensional
         posterior distribution.
-        
+
 	Arguments
 	---------
         samples : array [nDims, nSamples]
 
-        Returns
+    Returns
 	-------
         None
         """
@@ -98,4 +98,3 @@ def compute_agreement(chains, nSamples=100000, nBins=100, randomSeed=42):
     sigma = stats.norm.isf(PTE/2)
 
     return PTE, sigma
-
