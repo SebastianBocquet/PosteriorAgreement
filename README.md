@@ -8,3 +8,6 @@ and construct the probability distribution P**δ** from the ensemble [**δ**]. T
 *p = ∫S d**y** P**δ**(**y**), S: **y** ϵ P**δ**(**y**) < P**δ**(**0**)*
 
 where *P**δ**(**0**)* is the probability of zero difference. Finally, we can convert the PTE *p* into a significance *σ* using Gaussian statistics.
+
+## Note
+Depending on which likelihood sampler you are using, your samples may have weights. This code assumes all samples have equal weights. Just reformat your chain by duplicating samples according to their weights (e.g., if a given sample has weight 2, just copy that sample; do this step twice for a weight 3, and so on).
