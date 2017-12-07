@@ -9,5 +9,6 @@ and construct the probability distribution P**δ** from the ensemble [**δ**]. T
 
 where *P**δ**(**0**)* is the probability of zero difference. Finally, we can convert the PTE *p* into a significance *σ* using Gaussian statistics.
 
-## Note
-Depending on which likelihood sampler you are using, your samples may have weights. This code assumes all samples have equal weights. Just reformat your chain by duplicating samples according to their weights (e.g., if a given sample has weight 2, just copy that sample; do this step twice for a weight 3, and so on).
+# Using weighted samples
+There are many scenarios where your sample point have non-integer weights. You can pass the `weights` argument, and we use a modified gaussian kernel density estimator:
+https://gist.github.com/tillahoffmann/f844bce2ec264c1c8cb5
