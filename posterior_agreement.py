@@ -1,9 +1,10 @@
 from __future__ import division
 import numpy as np
 from scipy import stats
+import weighted_kde
 
 class NDimPosterior:
-    def __init__(self, samples):
+    def __init__(self, samples, weights=None):
         """Initialize the Gaussian KDE for an n-dimensional
         posterior distribution.
 
@@ -15,7 +16,10 @@ class NDimPosterior:
 	-------
         None
         """
-        self.kde = stats.gaussian_kde(samples)
+        if weights is None:
+            self.kde = stats.gaussian_kde(samples)
+        else:
+            self.kde = weighted_kde.gaussian_kde(samples, weights=weights)
         self.mean = samples.mean(axis=1)
         self.std = samples.std(axis=1)
         self.xmin = samples.min(axis=1)
@@ -27,7 +31,7 @@ class NDimPosterior:
         return self.kde.evaluate(x)
 
 
-def compute_agreement(chains, nSamples=100000, nBins=100, randomSeed=42):
+def compute_agreement(chains, weights=None, nSamples=100000, nBins=100, randomSeed=42):
     """Compute agreement between two n-dimensional (nDim) MCMC chains.
 
     Arguments
@@ -47,6 +51,7 @@ def compute_agreement(chains, nSamples=100000, nBins=100, randomSeed=42):
     """
     np.random.seed(randomSeed)
 
+    # Check the chains
     if len(chains[0].shape)==1:
         nDim = 1
         assert len(chains[1].shape)==1, \
@@ -57,13 +62,23 @@ def compute_agreement(chains, nSamples=100000, nBins=100, randomSeed=42):
         assert chains[1].shape[1]==nDim, \
             "Chains have different dimensions %d %d"%(nDim, chains[1].shape[1])
 
+    # Check the weights
+    if weights is not None:
+        for i in range(2):
+            assert len(weights[i])==len(chains[i]), \
+                "Weights must have same lenght as chain (chain[%d])"%i
+
     # Draw random samples and build distribution of differences
     idx0 = np.random.randint(0, len(chains[0]), nSamples)
     idx1 = np.random.randint(0, len(chains[1]), nSamples)
     diffDist = chains[0][idx0,:] - chains[1][idx1,:]
 
+    diffDistWeight = None
+    if weights is not None:
+        diffDistWeight = (weights[0][idx0]**2 + weights[1][idx1]**2)**.5
+
     # Build KDE estimator
-    posterior = NDimPosterior(diffDist.T)
+    posterior = NDimPosterior(diffDist.T, weights=diffDistWeight)
 
     # Setup up (flat) grid
     ranges = np.array((posterior.xmin, posterior.xmax)).T
@@ -90,11 +105,10 @@ def compute_agreement(chains, nSamples=100000, nBins=100, randomSeed=42):
 
     # Total distribution
     I = np.sum(diffDistKDE)
-    # Integral over x where f(x)>level
-    pbar = np.sum(diffDistKDE[diffDistKDE>level])
+    # Integral over x where f(x)<level
+    PTE = np.sum(diffDistKDE[diffDistKDE<level]) / I
 
-    # Probability to exceed zero
-    PTE = 1 - pbar/I
+    # Convert into sigmas using normal distribution
     sigma = stats.norm.isf(PTE/2)
 
     return PTE, sigma
