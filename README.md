@@ -10,7 +10,7 @@ We draw representative samples [**x1**] and [**x2**] from *P1(**x**)* and *P2(**
 
 where *D*(**0**) is the probability of zero difference.
 
-The following figure show the normalized difference distribution, and highlights the are that is integrated to obtain the *p*-value.
+The following figure show the normalized difference distribution, and highlights the are that is integrated to obtain the *p*-value. This makes sense intuitively: if zero is well within the difference distribution, the *p*-value is large, indicating good agreement. Conversely, if zero is far from the distribution, the *p*-value will be very small.
 
 ![](one-d_example.png)
 
