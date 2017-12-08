@@ -12,7 +12,7 @@ where *D*(**0**)* is the probability of zero difference.
 
 The following figure show the normalized difference distribution, and highlights the are that is integrated to obtain the *p*-value.
 
-![One-dimensional example.](https://github.com/SebastianBocquet/PosteriorAgreement/blob/master/one-d_example.png)
+![](one-d_example.png)
 
 ## Higher dimensions
 
