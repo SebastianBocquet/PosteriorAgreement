@@ -4,11 +4,11 @@ Quantify whether the difference between two posterior distributions is consisten
 
 ## Let's get started with a one-dimensional example
 
-We draw representative samples [**x1**] and **x2** from *P1(**x**)* and *P2(**x**)*, compute the difference between pairs of points **δ** ≡ **x1** - **x2** and construct the probability distribution **D** from the ensemble [**δ**]. The probability value (or *p*-value) then is
+We draw representative samples [**x1**] and [**x2**] from *P1(**x**)* and *P2(**x**)*, compute the difference between pairs of points **δ** ≡ **x1** - **x2** and construct the probability distribution *D* from the ensemble [**δ**]. The probability value (or *p*-value) then is
 
-*p = ∫S d**y** *D*(**y**), S: **y** ϵ *D*(**y**) < *D*(**0**)*
+![](eqn.png)
 
-where *D*(**0**)* is the probability of zero difference.
+where *D*(**0**) is the probability of zero difference.
 
 The following figure show the normalized difference distribution, and highlights the are that is integrated to obtain the *p*-value.
 
