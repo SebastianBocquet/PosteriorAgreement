@@ -5,6 +5,7 @@ Quantify whether the difference between two posterior distributions is consisten
 ## Installation
 
 I recommend you install the package straight from GitHub:
+
 `pip install git+https://github.com/SebastianBocquet/PosteriorAgreement`
 
 ## Let's get started with a one-dimensional example
