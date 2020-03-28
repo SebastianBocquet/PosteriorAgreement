@@ -3,7 +3,7 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open('VERSION.txt', 'r') as version_file:
+with open('posterior_agreement/VERSION.txt', 'r') as version_file:
     version = version_file.read().strip()
 
 setuptools.setup(
@@ -16,6 +16,8 @@ setuptools.setup(
     long_description_content_type="text/md",
     url="https://github.com/SebastianBocquet/PosteriorAgreement",
     packages=['posterior_agreement'],
+    package_data={'posterior_agreement': ["VERSION.txt"],},
+    install_requires = ['numpy', 'scipy'],
     classifiers=[
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",

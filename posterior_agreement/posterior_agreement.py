@@ -1,7 +1,8 @@
 from __future__ import division
 import numpy as np
 from scipy import stats
-import weighted_kde
+
+from . import weighted_kde
 
 class compute_agreement:
     def setup_KDE(self):
