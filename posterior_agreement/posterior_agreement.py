@@ -73,7 +73,7 @@ class compute_agreement:
 
         self.diffDistWeight = None
         if weights is not None:
-            self.diffDistWeight = (weights[0][idx0]**2 + weights[1][idx1]**2)**.5
+            self.diffDistWeight = weights[0][idx0] * weights[1][idx1]
 
         # Build KDE estimator
         self.setup_KDE()
